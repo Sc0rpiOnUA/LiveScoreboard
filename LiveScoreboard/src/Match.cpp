@@ -2,40 +2,46 @@
 
 Match::Match(string homeTeam, string awayTeam)
 {
-
+	homeTeamName = homeTeam;
+	awayTeamName = awayTeam;
+	homeTeamScore = 0;
+	awayTeamScore = 0;
 }
 
 int Match::GetScoreSum()
 {
-	return -1;
+	return homeTeamScore + awayTeamScore;
 }
 
 string Match::GetHomeTeamName()
 {
-	return "";
+	return homeTeamName;
 }
 
 int Match::GetHomeTeamScore()
 {
-	return -1;
+	return homeTeamScore;
 }
 
 string Match::GetAwayTeamName()
 {
-	return "";
+	return awayTeamName;
 }
 
 int Match::GetAwayTeamScore()
 {
-	return -1;
+	return awayTeamScore;
 }
+
 
 void Match::UpdateTeamNames(string homeTeam, string awayTeam)
 {
-	
+	homeTeamName = homeTeam;
+	awayTeamName = awayTeam;
 }
 
 void Match::UpdateScore(int homeScore, int awayScore)
 {
-	
+	homeTeamScore = homeScore;
+	awayTeamScore = awayScore;
 }
