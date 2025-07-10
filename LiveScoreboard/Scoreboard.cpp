@@ -1,6 +1,26 @@
 #include "Scoreboard.h"
 
-std::string Scoreboard::Ping()
+void Scoreboard::AddMatch(string team1, string team2)
 {
-	return "Pong";
+
+}
+
+void Scoreboard::UpdateMatchScore(int index, int homeTeamScore, int awayTeamScore)
+{
+
+}
+
+void Scoreboard::RemoveMatch(int index)
+{
+
+}
+
+std::vector<Match> Scoreboard::GetSummary()
+{
+	return std::vector<Match>();
+}
+
+std::vector<Match> Scoreboard::GetScoreboard()
+{
+	return std::vector<Match>();
 }

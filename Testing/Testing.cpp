@@ -6,16 +6,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Testing
 {
-	TEST_CLASS(Test)
-	{
-	public:		
-		TEST_METHOD(Ping)
-		{
-			Scoreboard scoreboard;
-			Assert::AreEqual(std::string("Pong"), scoreboard.Ping());
-		}
-	};
-
 	TEST_CLASS(MatchTesting)
 	{
 	public:
@@ -41,5 +31,23 @@ namespace Testing
 			Assert::AreEqual(2, match.GetAwayTeamScore());
 			Assert::AreEqual(5, match.GetScoreSum());
 		}
+	};
+
+	TEST_CLASS(ScoreboardTesting)
+	{
+	public:
+		TEST_METHOD(AddMatchToScoreboard)
+		{
+			Scoreboard scoreboard;
+
+			Match match("Germany", "Italy");
+			scoreboard.AddMatch("Germany", "Italy");
+
+			Assert::AreEqual(match.GetHomeTeamName(), scoreboard.GetScoreboard()[0].GetHomeTeamName());
+			Assert::AreEqual(match.GetAwayTeamName(), scoreboard.GetScoreboard()[0].GetAwayTeamName());
+			Assert::AreEqual(match.GetHomeTeamScore(), scoreboard.GetScoreboard()[0].GetHomeTeamScore());
+			Assert::AreEqual(match.GetAwayTeamScore(), scoreboard.GetScoreboard()[0].GetAwayTeamScore());
+		}
+		
 	};
 }
