@@ -45,6 +45,7 @@ bool MatchComparitor(Match match1, Match match2)
 std::vector<Match> Scoreboard::GetSummary()
 {
     std::vector <Match> sortedScoreboard = scoreboard;
+    std::reverse(sortedScoreboard.begin(), sortedScoreboard.end());
     stable_sort(sortedScoreboard.begin(), sortedScoreboard.end(), MatchComparitor);
 
     return sortedScoreboard;

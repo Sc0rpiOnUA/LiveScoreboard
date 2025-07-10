@@ -156,6 +156,47 @@ namespace Testing
 
 		TEST_METHOD(GetSummary)
 		{
+			std::vector <std::string> desiredSummary{ 
+				"Uruguay 6 - Italy 6",
+				"Spain 10 - Brazil 2",
+				"Mexico 0 - Canada 5",
+				"Argentina 3 - Australia 1",
+				"Germany 2 - France 2" };
+
+			Scoreboard scoreboard;
+			std::string matchString;
+
+			scoreboard.AddMatch("Mexico", "Canada");
+			scoreboard.AddMatch("Spain", "Brazil");
+			scoreboard.AddMatch("Germany", "France");
+			scoreboard.AddMatch("Uruguay", "Italy");
+			scoreboard.AddMatch("Argentina", "Australia");
+
+			scoreboard.UpdateMatchScore(0, 0, 5);
+			scoreboard.UpdateMatchScore(1, 10, 2);
+			scoreboard.UpdateMatchScore(2, 2, 2);
+			scoreboard.UpdateMatchScore(3, 6, 6);
+			scoreboard.UpdateMatchScore(4, 3, 1);			
+
+			for (int i = 0; i < scoreboard.GetSummary().size(); i++)
+			{
+				matchString = scoreboard.GetSummary()[i].GetHomeTeamName() + " " + std::to_string(scoreboard.GetSummary()[i].GetHomeTeamScore()) + " - "
+					+ scoreboard.GetSummary()[i].GetAwayTeamName() + " " + std::to_string(scoreboard.GetSummary()[i].GetAwayTeamScore());
+				Logger::WriteMessage(matchString.c_str());
+				Assert::AreEqual(desiredSummary[i], matchString);				
+			}			
+		}
+
+		TEST_METHOD(GetSummaryModified)
+		{
+			std::vector <std::string> desiredSummary{ 
+				"Egypt 8 - India 7",
+				"Uruguay 6 - Italy 6",
+				"Spain 10 - Brazil 2",
+				"USA 2 - Chile 5",
+				"Mexico 0 - Canada 5",				
+				"Germany 2 - France 2" };
+
 			Scoreboard scoreboard;
 			std::string matchString;
 
@@ -171,26 +212,20 @@ namespace Testing
 			scoreboard.UpdateMatchScore(3, 6, 6);
 			scoreboard.UpdateMatchScore(4, 3, 1);
 
-			for each (Match match in scoreboard.GetSummary())
-			{
-				matchString = match.GetHomeTeamName() + " " + std::to_string(match.GetHomeTeamScore()) + " - "
-					+ match.GetAwayTeamName() + " " + std::to_string(match.GetAwayTeamScore());
-				Logger::WriteMessage(matchString.c_str());
-			}
+			scoreboard.FinishMatch(4);
 
-			//Checking the home team name/score is enough, since UpdateMatchScore is checked more thoroughly in other tests
-			//Checking scoreboard summary. It should be sorted by sum of goals
-			Assert::AreEqual(std::string("Uruguay"), scoreboard.GetSummary()[0].GetHomeTeamName());
-			Assert::AreEqual(6, scoreboard.GetSummary()[0].GetHomeTeamScore());
-			Assert::AreEqual(std::string("Spain"), scoreboard.GetSummary()[1].GetHomeTeamName());
-			Assert::AreEqual(10, scoreboard.GetSummary()[1].GetHomeTeamScore());
-			Assert::AreEqual(std::string("Mexico"), scoreboard.GetSummary()[2].GetHomeTeamName());
-			Assert::AreEqual(0, scoreboard.GetSummary()[2].GetHomeTeamScore());
-			Assert::AreEqual(std::string("Argentina"), scoreboard.GetSummary()[3].GetHomeTeamName());
-			Assert::AreEqual(3, scoreboard.GetSummary()[3].GetHomeTeamScore());
-			Assert::AreEqual(std::string("Germany"), scoreboard.GetSummary()[4].GetHomeTeamName());
-			Assert::AreEqual(2, scoreboard.GetSummary()[4].GetHomeTeamScore());
-			
+			scoreboard.AddMatch("USA", "Chile");
+			scoreboard.AddMatch("Egypt", "India");
+			scoreboard.UpdateMatchScore(4, 2, 5);
+			scoreboard.UpdateMatchScore(5, 8, 7);
+
+			for (int i = 0; i < scoreboard.GetSummary().size(); i++)
+			{
+				matchString = scoreboard.GetSummary()[i].GetHomeTeamName() + " " + std::to_string(scoreboard.GetSummary()[i].GetHomeTeamScore()) + " - "
+					+ scoreboard.GetSummary()[i].GetAwayTeamName() + " " + std::to_string(scoreboard.GetSummary()[i].GetAwayTeamScore());
+				Logger::WriteMessage(matchString.c_str());
+				Assert::AreEqual(desiredSummary[i], matchString);
+			}
 		}
 		
 	};
