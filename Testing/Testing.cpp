@@ -36,17 +36,122 @@ namespace Testing
 	TEST_CLASS(ScoreboardTesting)
 	{
 	public:
-		TEST_METHOD(AddMatchToScoreboard)
+		TEST_METHOD(AddMatch)
 		{
 			Scoreboard scoreboard;
 
-			Match match("Germany", "Italy");
 			scoreboard.AddMatch("Germany", "Italy");
 
-			Assert::AreEqual(match.GetHomeTeamName(), scoreboard.GetScoreboard()[0].GetHomeTeamName());
-			Assert::AreEqual(match.GetAwayTeamName(), scoreboard.GetScoreboard()[0].GetAwayTeamName());
-			Assert::AreEqual(match.GetHomeTeamScore(), scoreboard.GetScoreboard()[0].GetHomeTeamScore());
-			Assert::AreEqual(match.GetAwayTeamScore(), scoreboard.GetScoreboard()[0].GetAwayTeamScore());
+			Assert::AreEqual(std::string("Germany"), scoreboard.GetScoreboard()[0].GetHomeTeamName());
+			Assert::AreEqual(std::string("Italy"), scoreboard.GetScoreboard()[0].GetAwayTeamName());
+			Assert::AreEqual(0, scoreboard.GetScoreboard()[0].GetHomeTeamScore());
+			Assert::AreEqual(0, scoreboard.GetScoreboard()[0].GetAwayTeamScore());
+			Assert::AreEqual(0, scoreboard.GetScoreboard()[0].GetScoreSum());			
+		}
+		TEST_METHOD(UpdateMatchScore)
+		{
+			Scoreboard scoreboard;
+
+			scoreboard.AddMatch("Germany", "Italy");
+			scoreboard.UpdateMatchScore(0, 2, 3);
+
+			Assert::AreEqual(std::string("Germany"), scoreboard.GetScoreboard()[0].GetHomeTeamName());
+			Assert::AreEqual(std::string("Italy"), scoreboard.GetScoreboard()[0].GetAwayTeamName());
+			Assert::AreEqual(2, scoreboard.GetScoreboard()[0].GetHomeTeamScore());
+			Assert::AreEqual(3, scoreboard.GetScoreboard()[0].GetAwayTeamScore());
+			Assert::AreEqual(5, scoreboard.GetScoreboard()[0].GetScoreSum());
+		}
+
+		TEST_METHOD(UpdateEmptyScoreboard)
+		{
+			bool caughtException = false;
+			Scoreboard scoreboard;
+
+			try
+			{
+				scoreboard.UpdateMatchScore(0, 2, 3);
+			}
+			catch (const std::exception& e)
+			{
+				caughtException = true;
+				Logger::WriteMessage(e.what());
+			}
+			if (!caughtException)
+			{
+				Assert::Fail(L"No exception thrown while one was expected!");
+			}
+		}
+
+		TEST_METHOD(UpdateMatchOutOfRange)
+		{
+			bool caughtException = false;
+			Scoreboard scoreboard;
+
+			try
+			{
+				scoreboard.AddMatch("Germany", "Italy");
+				scoreboard.UpdateMatchScore(1, 2, 3);
+			}
+			catch (const std::exception& e)
+			{
+				caughtException = true;
+				Logger::WriteMessage(e.what());
+			}
+			if (!caughtException)
+			{
+				Assert::Fail(L"No exception thrown while one was expected!");
+			}
+		}
+
+		TEST_METHOD(UpdateWithNegativeScores)
+		{
+			bool caughtException = false;
+			Scoreboard scoreboard;
+
+			try
+			{
+				scoreboard.AddMatch("Germany", "Italy");
+				scoreboard.UpdateMatchScore(0, -2, -3);
+			}
+			catch (const std::exception& e)
+			{
+				caughtException = true;
+				Logger::WriteMessage(e.what());
+			}
+			if (!caughtException)
+			{
+				Assert::Fail(L"No exception thrown while one was expected!");
+			}
+		}
+
+		TEST_METHOD(RemoveMatch)
+		{
+			Scoreboard scoreboard;
+
+			scoreboard.AddMatch("Germany", "Italy");
+			scoreboard.RemoveMatch(0);			
+
+			Assert::AreEqual(static_cast <size_t>(0), scoreboard.GetScoreboard().size());
+		}
+
+		TEST_METHOD(RemoveMatchFromEmpty)
+		{
+			bool caughtException = false;
+			Scoreboard scoreboard;
+
+			try
+			{
+				scoreboard.RemoveMatch(0);
+			}
+			catch (const std::exception& e)
+			{
+				caughtException = true;
+				Logger::WriteMessage(e.what());
+			}
+			if (!caughtException)
+			{
+				Assert::Fail(L"No exception thrown while one was expected!");
+			}
 		}
 		
 	};
