@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LiveScoreboard", "LiveScoreboard\LiveScoreboard.vcxproj", "{758873E0-B8D8-477C-8B03-741ECE235C12}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Testing", "Testing\Testing.vcxproj", "{0273F600-2556-4860-A099-86FADDD4DF9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{758873E0-B8D8-477C-8B03-741ECE235C12}.Release|x64.Build.0 = Release|x64
 		{758873E0-B8D8-477C-8B03-741ECE235C12}.Release|x86.ActiveCfg = Release|Win32
 		{758873E0-B8D8-477C-8B03-741ECE235C12}.Release|x86.Build.0 = Release|Win32
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Debug|x64.ActiveCfg = Debug|x64
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Debug|x64.Build.0 = Debug|x64
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Debug|x86.ActiveCfg = Debug|Win32
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Debug|x86.Build.0 = Debug|Win32
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Release|x64.ActiveCfg = Release|x64
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Release|x64.Build.0 = Release|x64
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Release|x86.ActiveCfg = Release|Win32
+		{0273F600-2556-4860-A099-86FADDD4DF9E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
