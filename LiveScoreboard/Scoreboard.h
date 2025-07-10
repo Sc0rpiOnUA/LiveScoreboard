@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "include/Match.h"
 
 class Scoreboard
@@ -10,7 +11,7 @@ private:
 public:	
 	void AddMatch(string team1, string team2);
 	void UpdateMatchScore(int index, int homeTeamScore, int awayTeamScore);
-	void RemoveMatch(int index);
+	void FinishMatch(int index);
 	std::vector<Match> GetSummary();
 	std::vector<Match> GetScoreboard();
 };

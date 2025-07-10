@@ -124,24 +124,24 @@ namespace Testing
 			}
 		}
 
-		TEST_METHOD(RemoveMatch)
+		TEST_METHOD(FinishMatch)
 		{
 			Scoreboard scoreboard;
 
 			scoreboard.AddMatch("Germany", "Italy");
-			scoreboard.RemoveMatch(0);			
+			scoreboard.FinishMatch(0);			
 
 			Assert::AreEqual(static_cast <size_t>(0), scoreboard.GetScoreboard().size());
 		}
 
-		TEST_METHOD(RemoveMatchFromEmpty)
+		TEST_METHOD(FinishMatchInEmpty)
 		{
 			bool caughtException = false;
 			Scoreboard scoreboard;
 
 			try
 			{
-				scoreboard.RemoveMatch(0);
+				scoreboard.FinishMatch(0);
 			}
 			catch (const std::exception& e)
 			{
@@ -152,6 +152,45 @@ namespace Testing
 			{
 				Assert::Fail(L"No exception thrown while one was expected!");
 			}
+		}
+
+		TEST_METHOD(GetSummary)
+		{
+			Scoreboard scoreboard;
+			std::string matchString;
+
+			scoreboard.AddMatch("Mexico", "Canada");
+			scoreboard.AddMatch("Spain", "Brazil");
+			scoreboard.AddMatch("Germany", "France");
+			scoreboard.AddMatch("Uruguay", "Italy");
+			scoreboard.AddMatch("Argentina", "Australia");
+
+			scoreboard.UpdateMatchScore(0, 0, 5);
+			scoreboard.UpdateMatchScore(1, 10, 2);
+			scoreboard.UpdateMatchScore(2, 2, 2);
+			scoreboard.UpdateMatchScore(3, 6, 6);
+			scoreboard.UpdateMatchScore(4, 3, 1);
+
+			for each (Match match in scoreboard.GetSummary())
+			{
+				matchString = match.GetHomeTeamName() + " " + std::to_string(match.GetHomeTeamScore()) + " - "
+					+ match.GetAwayTeamName() + " " + std::to_string(match.GetAwayTeamScore());
+				Logger::WriteMessage(matchString.c_str());
+			}
+
+			//Checking the home team name/score is enough, since UpdateMatchScore is checked more thoroughly in other tests
+			//Checking scoreboard summary. It should be sorted by sum of goals
+			Assert::AreEqual(std::string("Uruguay"), scoreboard.GetSummary()[0].GetHomeTeamName());
+			Assert::AreEqual(6, scoreboard.GetSummary()[0].GetHomeTeamScore());
+			Assert::AreEqual(std::string("Spain"), scoreboard.GetSummary()[1].GetHomeTeamName());
+			Assert::AreEqual(10, scoreboard.GetSummary()[1].GetHomeTeamScore());
+			Assert::AreEqual(std::string("Mexico"), scoreboard.GetSummary()[2].GetHomeTeamName());
+			Assert::AreEqual(0, scoreboard.GetSummary()[2].GetHomeTeamScore());
+			Assert::AreEqual(std::string("Argentina"), scoreboard.GetSummary()[3].GetHomeTeamName());
+			Assert::AreEqual(3, scoreboard.GetSummary()[3].GetHomeTeamScore());
+			Assert::AreEqual(std::string("Germany"), scoreboard.GetSummary()[4].GetHomeTeamName());
+			Assert::AreEqual(2, scoreboard.GetSummary()[4].GetHomeTeamScore());
+			
 		}
 		
 	};

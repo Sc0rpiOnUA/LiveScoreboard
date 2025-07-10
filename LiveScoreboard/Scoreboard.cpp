@@ -21,7 +21,7 @@ void Scoreboard::UpdateMatchScore(int index, int homeTeamScore, int awayTeamScor
     }    
 }
 
-void Scoreboard::RemoveMatch(int index)
+void Scoreboard::FinishMatch(int index)
 {
     if (scoreboard.size() == 0)
     {
@@ -37,9 +37,17 @@ void Scoreboard::RemoveMatch(int index)
     }
 }
 
+bool MatchComparitor(Match match1, Match match2)
+{
+    return match1.GetScoreSum() > match2.GetScoreSum();
+}
+
 std::vector<Match> Scoreboard::GetSummary()
 {
-    return scoreboard;
+    std::vector <Match> sortedScoreboard = scoreboard;
+    stable_sort(sortedScoreboard.begin(), sortedScoreboard.end(), MatchComparitor);
+
+    return sortedScoreboard;
 }
 
 std::vector<Match> Scoreboard::GetScoreboard()
