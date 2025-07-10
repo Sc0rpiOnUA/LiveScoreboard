@@ -132,10 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Match.h" />
-    <ClInclude Include="LiveScoreboard.h" />
+    <ClInclude Include="Scoreboard.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LiveScoreboard.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="src\Match.cpp" />
     <ClCompile Include="tests\TestScoreboard.cpp" />
   </ItemGroup>
